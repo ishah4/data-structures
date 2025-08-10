@@ -1,0 +1,146 @@
+#include <iostream>
+using namespace std;
+
+struct node {
+    int data;
+    node* next;
+};
+
+class slinklist {
+private:
+    node* head;
+    node* tail;
+
+public:
+    slinklist() {
+        head = NULL;
+        tail = NULL;
+    }
+
+    void insert() {
+        node* temp = new node;
+        cout << "Enter data: ";
+        cin >> temp->data;
+        temp->next = NULL;
+
+        if (head == NULL) {
+            head = temp;
+            tail = temp;
+        } else {
+            tail->next = temp;
+            tail = temp;
+        }
+    }
+
+    void display() {
+        node* temp = head;
+        if (temp == NULL) {
+            cout << "List is empty\n";
+            return;
+        }
+        while (temp != NULL) {
+            cout << "Data: " << temp->data << endl;
+            temp = temp->next;
+        }
+    }
+
+    void search() {
+        int d, f = 0;
+        cout << "Enter data to search: ";
+        cin >> d;
+
+        node* temp = head;
+        while (temp != NULL) {
+            if (temp->data == d) {
+                f = 1;
+                break;
+            }
+            temp = temp->next;
+        }
+
+        if (f == 1)
+            cout << "Data found successfully\n";
+        else
+            cout << "Data not found\n";
+    }
+
+    void update() {
+        int d, f = 0;
+        cout << "Enter data to update: ";
+        cin >> d;
+
+        node* temp = head;
+        while (temp != NULL) {
+            if (temp->data == d) {
+                f = 1;
+                break;
+            }
+            temp = temp->next;
+        }
+
+        if (f == 1) {
+            cout << "Enter new data: ";
+            cin >> temp->data;
+            cout << "Data updated successfully\n";
+        } else {
+            cout << "Data not found\n";
+        }
+    }
+
+    void deletion() {
+        int d, f = 0;
+        cout << "Enter data to delete: ";
+        cin >> d;
+
+        node* temp = head;
+        node* prev = NULL;
+
+        while (temp != NULL) {
+            if (temp->data == d) {
+                f = 1;
+                break;
+            }
+            prev = temp;
+            temp = temp->next;
+        }
+
+        if (f == 1) {
+            if (temp == head) {
+                head = head->next;
+                delete temp;
+            } else if (temp == tail) {
+                tail = prev;
+                tail->next = NULL;
+                delete temp;
+            } else {
+                prev->next = temp->next;
+                delete temp;
+            }
+            cout << "Data deleted successfully\n";
+        } else {
+            cout << "Data not found\n";
+        }
+    }
+};
+
+int main() {
+    slinklist s;
+    int choice;
+
+    do {
+        cout << "\n1. Insert\n2. Display\n3. Search\n4. Update\n5. Delete\n6. Exit\nEnter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1: s.insert(); break;
+        case 2: s.display(); break;
+        case 3: s.search(); break;
+        case 4: s.update(); break;
+        case 5: s.deletion(); break;
+        case 6: cout << "Exiting...\n"; break;
+        default: cout << "Invalid choice!\n";
+        }
+    } while (choice != 6);
+
+    return 0;
+}
